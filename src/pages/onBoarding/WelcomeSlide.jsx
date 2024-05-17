@@ -6,7 +6,7 @@ import SlideImage3 from '../../assets/image_3.jpeg';
 const images = [SlideImage1, SlideImage2, SlideImage3];
 const totalTimePerImage = 5; // Total time to display each image in seconds
 
-const WelcomeSlide = () => {
+const WelcomeSlide = ({ handleSkipClick }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [progressBars, setProgressBars] = useState([0, 0, 0]);
 
@@ -40,6 +40,7 @@ const WelcomeSlide = () => {
   }, [currentImageIndex]);
 
   const skipSlide = () => {
+    handleSkipClick()
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
     setProgressBars([0, 0, 0]);
   };

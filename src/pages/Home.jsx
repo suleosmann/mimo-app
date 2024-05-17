@@ -7,33 +7,46 @@ const Home = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [showWelcomeSlide, setShowWelcomeSlide] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
+  const [skip, setSkip] = useState(false)
+
 
   useEffect(() => {
     // Show splash for 3 seconds
     const splashTimer = setTimeout(() => {
       setShowSplash(false);
       setShowWelcomeSlide(true);
-    }, 3000);
+    }, 1500);
 
     return () => clearTimeout(splashTimer);
   }, []);
+  
+  const handleSkipClick =() => {
+    setSkip(true)
+  }
+  
 
   useEffect(() => {
-    if (showWelcomeSlide) {
-      // Automatically show registration after 3 slides
+    if (skip) {
+      setShowWelcomeSlide(false);
+      setShowRegistration(true);
+    } else if (showWelcomeSlide) {
+      // Total time for each slide to display (5 seconds) + Transition time (1 second)
       const slideTimer = setTimeout(() => {
         setShowWelcomeSlide(false);
         setShowRegistration(true);
-      }, 7300);
-
+      }, 7000);
+  
       return () => clearTimeout(slideTimer);
     }
-  }, [showWelcomeSlide]);
+  }, [showWelcomeSlide, skip]);
+  
+
+  
 
   return (
     <div>
       {showSplash && <Splash />}
-      {showWelcomeSlide && <WelcomeSlide />}
+      {showWelcomeSlide && <WelcomeSlide handleSkipClick = {handleSkipClick} />}
       {showRegistration && <Registration />}
     </div>
   );

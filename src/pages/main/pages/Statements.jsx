@@ -7,7 +7,7 @@ const Statements = () => {
 
   return (
     <div className='mx-8 '>
-      <div className="flex justify-between mt-16  text-custom-dark-green">
+      {/* <div className="flex justify-between mt-16  text-custom-dark-green">
         <div className="mt-4 ">
           <h1 className="text-xl font-semibold">Transcations</h1>
         </div>
@@ -19,7 +19,7 @@ const Statements = () => {
             className="w-[52px] h-[52px] rounded-full"
           />
         </div>
-      </div>
+      </div> */}
       <div className="flex justify-between  text-black">
         <div className="mt-4 ">
           <h1 className="text-xl font-normal">30 Nov 2023</h1>

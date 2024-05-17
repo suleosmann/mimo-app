@@ -9,30 +9,12 @@ import NairbiHq from "../../../assets/nairobi-hq.jpeg";
 const Home = () => {
   const [click, setClicked] = useState(false);
 
-
   const handleOnClick = () => {
     setClicked((prevClicked) => !prevClicked);
   };
 
-  
-
-
   return (
     <div className="font-montserrat">
-      <div className="flex justify-between mt-16 mx-8 text-custom-dark-green">
-        <div className=" ">
-          <h1 className="text-sm">Morning</h1>
-          <h1 className="text-xl font-semibold">Jane Smith</h1>
-        </div>
-        <div className="flex space-x-2">
-          <FaBell className="w-6 h-5 mt-4" />
-          <img
-            src={ProfileImg}
-            alt="Profile image"
-            className="w-[52px] h-[52px] rounded-full"
-          />
-        </div>
-      </div>
       <div>
         <div className="text-center text-xl font-normal mt-6">
           <div
@@ -52,7 +34,7 @@ const Home = () => {
         </div>
         <div className="relative h-[420px] w-[390px] " onClick={handleOnClick}>
           {!click && (
-            <div className="flex ml-6 absolute top-[30px] left-[76px]  h-[370px] w-[528px] gap-[12px]">
+            <div className="flex ml-6 absolute top-[30px] left-[76px]  gap-[12px]">
               <div
                 style={{ backgroundImage: `url(${TowersImg})` }}
                 className="flex justify-center relative w-[208px] h-[350px] gap-2.5 rounded-lg bg-cover"

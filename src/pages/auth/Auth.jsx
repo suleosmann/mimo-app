@@ -1,10 +1,8 @@
-import React, { useState, useContext } from "react";
 import MiMo_logo from "../../assets/MiMo_logo.png";
 import ladydoll from "../../assets/ladydoll.jpeg";
 import WhiteShirtMan from "../../assets/whiteshirtmale.jpeg";
-import { AuthContext } from "../../context/AuthContext";
-import useAuthenticate from "../../api/useAuthenticate"
-
+import useAuthenticate from "../../api/useAuthenticate";
+import { useAuthStore } from "../../stores/useAuthStore";
 const Auth = () => {
   const {
     authType,
@@ -15,12 +13,45 @@ const Auth = () => {
     setNationalId,
     verified,
     setVerified,
-  } = useContext(AuthContext);
+    pin,
+    setPin,
+    otpCode,
+    setOtpCode,
+    openPin,
+    pinCode,
+    setPinCode,
+  } = useAuthStore();
 
   const handleAuthType = (type) => {
     setAuthType(type);
   };
+
   const { authenticate } = useAuthenticate();
+  
+
+  const handleOtpInputChange = (index, value) => {
+    const newOtpCode = [...otpCode];
+    newOtpCode[index] = value;
+    setOtpCode(newOtpCode);
+  };
+  
+  const handlePinChange = (index, value) => {
+    const newPinCode = [...pinCode];
+    newPinCode[index] = value;
+    setPinCode(newPinCode);
+  };
+  
+
+  const handleVerifyClick = () => {
+    setOtpCode(["", "", "", "", ""]);
+    setVerified(false);
+  };
+
+  const handlePinConfirmClick = () => {
+    // Add your logic here to handle pin confirmation
+    console.log("Pin confirmed!");
+  };
+
 
   return (
     <div
@@ -94,53 +125,131 @@ const Auth = () => {
                   onChange={(e) => setNationalId(e.target.value)}
                   className=" bg-custom-pastel  rounded-lg px-3  py-1.5 w-full"
                 />
+                <label className="text-sm">Enter your Pin</label>
+
+                <input
+                  type="number"
+                  value={pin}
+                  onChange={(e) => setPin(e.target.value)}
+                  className=" bg-custom-pastel  rounded-lg px-3  py-1.5 w-full"
+                />
                 <p className="text-xs	 text-center mt-2">
-                  Please enter your ID to receive OTP to verify
+                  Please enter your ID and Pin to Login
                 </p>
               </div>
             )}
           </div>
-          {verified === true && (
-            <div className=" ml-3 mt-4">
-              <h1 className="text-lg">Verification Code</h1>
-              <p className="text-sm pr-2 mt-3">
-                Please enter the 5-digit verification code sent to your phone
-                number & email
-              </p>
-              <div className="mt-6 flex space-x-2">
-                <input
-                  type="text"
-                  className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
-                  placeholder="_"
-                />
-                <input
-                  type="text"
-                  className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
-                  placeholder="_"
-                />
-                <input
-                  type="text"
-                  className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
-                  placeholder="_"
-                />
-                <input
-                  type="text"
-                  className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
-                  placeholder="_"
-                />
-                <input
-                  type="text"
-                  className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
-                  placeholder="_"
-                />
-              </div>
-            </div>
-          )}
+          {verified && !openPin && (
+      <div className=" ml-3 mt-4">
+        <h1 className="text-lg">Verification Code</h1>
+        <p className="text-sm pr-2 mt-3">
+          Please enter the 5-digit verification code sent to your phone
+          number & email
+        </p>
+        <div className="mt-6 flex space-x-2">
+          <input
+            type="text"
+            value={otpCode[0]}
+            maxLength="1"
+            onChange={(e) => handleOtpInputChange(0, e.target.value)}
+            className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
+            placeholder="_"
+          />
+          <input
+            type="text"
+            value={otpCode[1]}
+            maxLength="1"
+            onChange={(e) => handleOtpInputChange(1, e.target.value)}
+            className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
+            placeholder="_"
+          />
+          <input
+            type="text"
+            value={otpCode[2]}
+            maxLength="1"
+            onChange={(e) => handleOtpInputChange(2, e.target.value)}
+            className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
+            placeholder="_"
+          />
+          <input
+            type="text"
+            value={otpCode[3]}
+            maxLength="1"
+            onChange={(e) => handleOtpInputChange(3, e.target.value)}
+            className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
+            placeholder="_"
+          />
+          <input
+            type="text"
+            value={otpCode[4]}
+            maxLength="1"
+            onChange={(e) => handleOtpInputChange(4, e.target.value)}
+            className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
+            placeholder="_"
+          />
+        </div>
+      </div>
+    )}
+    {verified && openPin && (
+      <div className=" mt-4">
+        <h1 className="text-xl font-bold text-center mr-2">
+          Create a new Pin
+        </h1>
+
+        <div className="mt-6 ml-8 flex space-x-2">
+          <input
+            type="text"
+            maxLength="1"
+            value={pinCode[0]}
+            onChange={(e) => handlePinChange(0, e.target.value)}
+            className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
+            placeholder="_"
+          />
+          <input
+            type="text"
+            maxLength="1"
+            value={pinCode[1]}
+            onChange={(e) => handlePinChange(1, e.target.value)}
+            className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
+            placeholder="_"
+          />
+          <input
+            type="text"
+            maxLength="1"
+            value={pinCode[2]}
+            onChange={(e) => handlePinChange(2, e.target.value)}
+            className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
+            placeholder="_"
+          />
+          <input
+            type="text"
+            maxLength="1"
+            value={pinCode[3]}
+            onChange={(e) => handlePinChange(3, e.target.value)}
+            className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
+            placeholder="_"
+          />
+        </div>
+        <h1 className="text-sm mt-4 text-center">
+          Didn't receive code?{" "}
+          <span className="text-custom-green">Resend</span>
+        </h1>
+      </div>
+    )}
         </div>
 
         <div>
-          <button onClick={authenticate} className="absolute top-[688px] left-[48px] text-base text-custom-dark-green font-semibold bg-custom-green w-[295px] h-[40px] rounded-lg">
-            SEND OTP
+          <button
+            onClick={
+              verified
+                ? openPin
+                  ? handlePinConfirmClick
+                  : handleVerifyClick
+                : authenticate
+            }
+            className="absolute top-[688px] left-[48px] text-base text-custom-dark-green font-semibold bg-custom-green w-[295px] h-[40px] rounded-lg"
+          >
+            {verified ? (openPin ? "CONFIRM" : "VERIFY") : "SEND OTP"}
           </button>
         </div>
       </div>

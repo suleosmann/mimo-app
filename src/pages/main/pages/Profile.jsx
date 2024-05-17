@@ -7,7 +7,7 @@ const Profile = () => {
 
   return (
     <div className="mx-8 ">
-      <div className="flex justify-between mt-16  text-custom-dark-green">
+      {/* <div className="flex justify-between mt-16  text-custom-dark-green">
         <div className="mt-4 ">
           <h1 className="text-xl font-semibold">Profile</h1>
         </div>
@@ -15,7 +15,7 @@ const Profile = () => {
           <FaBell className="w-6 h-5 mt-4" />
           <FaCog className="w-6 h-5 mt-4" />
         </div>
-      </div>
+      </div> */}
       <div className="flex justify-center bg-white border-8 border-custom-pastel items-center w-[190px] h-[190px] rounded-full ml-16">
         <img
           src={ProfileImg}
@@ -86,7 +86,7 @@ const Profile = () => {
         </div>
       </div>
       <div>
-        <button className="bg-custom-green text-custom-dark-green font-bold w-[320px] h-[44px] rounded-lg absolute bottom-28">
+        <button className="bg-custom-green text-custom-dark-green font-bold w-[325px] h-[44px] rounded-lg absolute bottom-20">
           LOG OUT
         </button>
       </div>
