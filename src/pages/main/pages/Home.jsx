@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { FaBell } from "react-icons/fa";
-import ProfileImg from "../../../assets/ladydoll.jpeg";
 import MiMoAccountBalance from "../../../assets/MiMoAccountBalance.png";
 import TowersImg from "../../../assets/towers.jpeg";
-import KenyaPowersLogo from "../../../assets/Kenya_Power_logo.png";
+import KenyaPowersLogo from "../../../assets/kplc.png";
 import NairbiHq from "../../../assets/nairobi-hq.jpeg";
 
 const Home = () => {

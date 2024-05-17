@@ -1,7 +1,7 @@
 import { useAuthStore } from '../stores/useAuthStore';
 
 const useAuthenticate = () => {
-  const { authType, phoneNumber, nationalId, otpCode, pinCode, setVerified, setError, pin, setOpenPin, setNationalId, setPhoneNumber, setPinCode, setOtpCode, setPin, setAuthType } = useAuthStore();
+  const { authType, phoneNumber, nationalId, setAuthDone,  otpCode, pinCode, setVerified, setError, pin, setOpenPin, setNationalId, setPhoneNumber, setPinCode, setOtpCode, setPin, setAuthType } = useAuthStore();
 
   const register = async (nationalId, phoneNumber) => {
     const response = await fetch('http://3.127.183.100:8087/api/v1/patient', {
@@ -57,7 +57,8 @@ const useAuthenticate = () => {
       const data = await response.json();
       console.log(data);
       console.log('Pin set successfully');
-      setVerified(true);
+      setAuthType('login');
+      setVerified(false)
     } else {
       const errorData = await response.json();
       setError(errorData.error);
@@ -77,8 +78,8 @@ const useAuthenticate = () => {
     if (response.ok) {
       const data = await response.json();
       console.log(data);
+      setAuthDone(true);
       console.log('Authentication successful');
-      setVerified(true);
     } else {
       const errorData = await response.json();
       setError(errorData.error);
