@@ -23,7 +23,7 @@ const useAuthenticate = () => {
     setAuthType
   } = useAuthStore();
 
-  const { setUser } = useUserStore(); // Destructure setUser from useUserStore
+  const { setUser } = useUserStore();
 
   const register = async (nationalId, phoneNumber) => {
     try {
