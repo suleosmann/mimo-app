@@ -77,6 +77,21 @@ const Home = () => {
 
   return (
     <div className="relative font-montserrat mt-44">
+       <div className="text-center text-xl font-normal">
+  <div className="flex justify-center items-center mb-4">
+    <img src={MiMoAccountBalance} alt="Account Balance" />
+  </div>
+  <div className="flex justify-center items-center text-custom-green font-bold space-x-4">
+    <div className="flex items-baseline space-x-1">
+      <span className="text-xs">KES</span>
+      <h1 className="text-2xl">176,239.90</h1>
+    </div>
+    <button className="bg-custom-green rounded-lg text-white text-sm py-2 px-3  ">
+      Top Up
+    </button>
+  </div>
+</div>
+
       <div ref={containerRef} className="z-30">
         <div className="relative h-[420px] w-[390px]">
           <div className="flex ml-6 absolute top-[30px] gap-[12px] z-20">

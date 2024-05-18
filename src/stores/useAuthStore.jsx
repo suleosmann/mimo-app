@@ -8,7 +8,7 @@ export const useAuthStore = create((set) => ({
     authDone: false,
     setAuthDone: (type) => set({ authType: type }),
     setPhoneNumber: (number) => set({ phoneNumber: number }),
-    nationalId: "28516420",
+    nationalId: "",
     setNationalId: (id) => set({ nationalId: id }),
     otpCode: ["", "", "", "", ""],
     setOtpCode: (code) => set({ otpCode: code }),

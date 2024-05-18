@@ -3,17 +3,23 @@ import TabPanel from "./TabPanel";
 import Tabs from "./Tabs";
 import Home from "./pages/Home";
 import Statements from "./pages/Statements";
+import Pay from "./pages/wallet/Pay";
 import Beneficiaries from "./pages/Beneficiaries";
 import Profile from "./pages/Profile";
-import { FaHome, FaFileAlt, FaUserFriends, FaUser } from "react-icons/fa";
-import { FaBell, FaCog } from "react-icons/fa";
+import { FaHome, FaFileAlt, FaUserFriends, FaUser,FaBell, FaCog, FaMoneyBill  } from "react-icons/fa";
 import ProfileImg from "../../assets/ladydoll.jpeg";
 import Notification from "./pages/Notification";
+import { useUserStore } from "../../stores/useUserStore"; 
+import TopUp from ".././main/pages/wallet/TopUp"
+import {useWalletStore} from '../../stores/useWalletStore'
 
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState("Home");
   const [showNotifications, setShowNotifications] = useState(false);
   const [clickedTab, setClickedTab] = useState("");
+
+  const { user } = useUserStore(); 
+  const {topDone, setTopDone} = useWalletStore();
 
   const handleBellClick = () => {
     setShowNotifications(true);
@@ -24,11 +30,13 @@ const MainPage = () => {
     setActiveTab(tabLabel);
     setShowNotifications(false);
     setClickedTab(tabLabel);
+    setTopDone(false)
   };
 
   const tabLabels = [
     { label: "Home", icon: <FaHome />, component: <Home /> },
     { label: "Statements", icon: <FaFileAlt />, component: <Statements /> },
+    {label: "Pay", icon: <FaMoneyBill/>, component: <Pay/>},
     {
       label: "Beneficiaries",
       icon: <FaUserFriends />,
@@ -36,6 +44,8 @@ const MainPage = () => {
     },
     { label: "Profile", icon: <FaUser />, component: <Profile /> },
   ];
+
+
 
   return (
     <div>
@@ -51,7 +61,9 @@ const MainPage = () => {
         ) : (
           <div className="mt-4 font-montserrat">
             <h1 className="text-sm">Morning</h1>
-            <h1 className="text-xl font-semibold">Jane Smith</h1>
+            <h1 className="text-xl font-semibold">
+              {user ? `${user.firstName} ${user.lastName}` : "Jane Smith"}
+            </h1>
           </div>
         )}
         <div className="flex space-x-2">
@@ -69,21 +81,22 @@ const MainPage = () => {
       </div>
 
       <Tabs activeTab={activeTab} setActiveTab={handleTabClick}>
-        {tabLabels.map((tab) => (
-          <TabPanel
+    {tabLabels.map((tab) => (
+        <TabPanel
             key={tab.label}
             label={tab.label}
             icon={tab.icon}
             activeTab={activeTab}
-          >
+        >
             {showNotifications && clickedTab === tab.label ? (
-              <Notification />
+                <Notification />
             ) : (
-              tab.component
+                tab.label === 'Home' && topDone ? <TopUp /> : tab.component
             )}
-          </TabPanel>
-        ))}
-      </Tabs>
+        </TabPanel>
+    ))}
+</Tabs>
+
     </div>
   );
 };
