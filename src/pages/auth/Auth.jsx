@@ -201,7 +201,7 @@ const Auth = () => {
                   : handleVerifyClick
                 : handleSendOtp
             }
-            className="absolute top-[688px] left-[48px] text-base text-custom-dark-green font-semibold bg-custom-green w-[295px] h-[40px] rounded-lg"
+            className="absolute top-[638px] left-[48px] text-base text-custom-dark-green font-semibold bg-custom-green w-[295px] h-[40px] rounded-lg"
           >
             {authType === 'register'
     ? verified
