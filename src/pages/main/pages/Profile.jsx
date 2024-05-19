@@ -1,21 +1,12 @@
-import { FaBell, FaCog } from "react-icons/fa";
 import ProfileImg from "../../../assets/ladydoll.jpeg";
 import { useState } from "react";
 
 const Profile = () => {
-  const [complete, setComplete] = useState(0);
+  
 
   return (
     <div className="mx-8 ">
-      {/* <div className="flex justify-between mt-16  text-custom-dark-green">
-        <div className="mt-4 ">
-          <h1 className="text-xl font-semibold">Profile</h1>
-        </div>
-        <div className="flex space-x-2">
-          <FaBell className="w-6 h-5 mt-4" />
-          <FaCog className="w-6 h-5 mt-4" />
-        </div>
-      </div> */}
+      
       <div className="flex justify-center bg-white border-8 border-custom-pastel items-center w-[190px] h-[190px] rounded-full ml-16">
         <img
           src={ProfileImg}

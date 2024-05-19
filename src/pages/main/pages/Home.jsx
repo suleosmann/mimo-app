@@ -16,19 +16,51 @@ const Home = () => {
   const { topDone, setTopDone } = useWalletStore();
 
   const images = [
-    { image: TowersImg, logo: kplc },
-    { image: NairbiHq, logo: nssf },
-    { image: image3, logo: kra },
-    { image: image1, logo: kplc },
-    { image: image2, logo: nssf },
+    {
+      image: TowersImg,
+      logo: kplc,
+      title: "Electricity",
+      description: "Pay your electricity bills",
+      billers: ["KPLC", "KenGen"],
+    },
+    {
+      image: NairbiHq,
+      logo: nssf,
+      title: "Water",
+      description: "Pay your water bills",
+      billers: ["Nairobi Water", "Mombasa Water"],
+    },
+    {
+      image: image3,
+      logo: kra,
+      title: "Internet",
+      description: "Pay your internet bills",
+      billers: ["Zuku", "Safaricom"],
+    },
+    {
+      image: image1,
+      logo: kplc,
+      title: "Television",
+      description: "Pay your TV subscription",
+      billers: ["DSTV", "GoTV"],
+    },
+    {
+      image: image2,
+      logo: nssf,
+      title: "Phone",
+      description: "Pay your phone bills",
+      billers: ["Airtel", "Safaricom"],
+    },
   ];
+
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isImageClicked, setIsImageClicked] = useState(false);
+  const [isVisible, setIsVisible] = useState(!isImageClicked);
+
   const imagesLength = images.length;
   const containerRef = useRef(null);
   const scrollDelayTimeout = useRef(null);
   const scrollDelay = 300;
-  const [isImageClicked, setIsImageClicked] = useState(false);
-  const [isVisible, setIsVisible] = useState(!isImageClicked);
 
   useEffect(() => {
     if (!isImageClicked) {
@@ -158,7 +190,25 @@ const Home = () => {
         </div>
       </div>
       {isImageClicked && (
-        <div className="absolute bg-custom-dark-green w-full h-[450px] top-[195px] z-10"></div>
+        <div className="absolute bg-custom-dark-green w-full h-[450px] top-[195px] z-10 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-20 mx-16">
+            {currentImage.billers.map((biller, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-lg"
+              >
+                <h2 className="text-2xl font-bold  text-custom-green">
+                  {currentImage.title}
+                </h2>
+                <p className="mb-4 text-custom-green">{currentImage.description}</p>
+                <h3 className="text-xl font-semibold  text-custom-green">
+                  Biller:
+                </h3>
+                <p className="text-custom-green">{biller}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

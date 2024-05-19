@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Mpesa from "../../../../assets/mpesa.png";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import CashbackRewards from './CashbackRewards';
+
 
 const TopUp = () => {
   const types = ["M-pesa", "Cash", "PesaLink", "RTGS"];
@@ -122,6 +124,10 @@ const TopUp = () => {
         )}
       </div>
       </div>
+      {/* <div className="mb-32">
+      <CashbackRewards/>
+      </div> */}
+      
     </>
   );
 };

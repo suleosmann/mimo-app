@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body{
-    background-color: #D9D9D9;
+    background-color: #F1EFE8;
 }
 
 @keyframes fadeIn {

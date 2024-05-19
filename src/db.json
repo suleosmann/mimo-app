@@ -10,7 +10,7 @@
       "pin": "1234",
       "otp": "12345"
     },
-    { 
+    {
       "id": "2",
       "firstName": "Jane",
       "middleName": "A.",
@@ -28,6 +28,11 @@
     {
       "id": "e33d",
       "nationalId": "12345678",
+      "phoneNumber": "254123456789"
+    },
+    {
+      "id": "f0c4",
+      "nationalId": "36783360",
       "phoneNumber": "254123456789"
     }
   ]

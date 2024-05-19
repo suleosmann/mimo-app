@@ -6,12 +6,14 @@ import Statements from "./pages/Statements";
 import Pay from "./pages/wallet/Pay";
 import Beneficiaries from "./pages/Beneficiaries";
 import Profile from "./pages/Profile";
-import { FaHome, FaFileAlt, FaUserFriends, FaUser,FaBell, FaCog, FaMoneyBill  } from "react-icons/fa";
+import { FaArrowLeft, FaHome, FaFileAlt, FaUserFriends, FaUser, FaBell, FaCog, FaMoneyBill } from "react-icons/fa";
 import ProfileImg from "../../assets/ladydoll.jpeg";
 import Notification from "./pages/Notification";
 import { useUserStore } from "../../stores/useUserStore"; 
-import TopUp from ".././main/pages/wallet/TopUp"
-import {useWalletStore} from '../../stores/useWalletStore'
+import TopUp from ".././main/pages/wallet/TopUp";
+import { useWalletStore } from '../../stores/useWalletStore';
+import { useNavigateStore } from '../../stores/useNavigateStore';
+import Setting from './pages/Settings';
 
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -19,7 +21,12 @@ const MainPage = () => {
   const [clickedTab, setClickedTab] = useState("");
 
   const { user } = useUserStore(); 
-  const {topDone, setTopDone} = useWalletStore();
+  const { topDone, setTopDone } = useWalletStore();
+  const { settingPage, setSettingPage } = useNavigateStore();
+
+  const handleSettingClick = () => {
+    setSettingPage(true);
+  };
 
   const handleBellClick = () => {
     setShowNotifications(true);
@@ -30,22 +37,22 @@ const MainPage = () => {
     setActiveTab(tabLabel);
     setShowNotifications(false);
     setClickedTab(tabLabel);
-    setTopDone(false)
+    setTopDone(false);
+    setSettingPage(false); // Ensure Settings page is hidden
+  };
+
+  const handleBackClick = () => {
+    setSettingPage(false);
+    setActiveTab("Profile");
   };
 
   const tabLabels = [
     { label: "Home", icon: <FaHome />, component: <Home /> },
     { label: "Statements", icon: <FaFileAlt />, component: <Statements /> },
-    {label: "Pay", icon: <FaMoneyBill/>, component: <Pay/>},
-    {
-      label: "Beneficiaries",
-      icon: <FaUserFriends />,
-      component: <Beneficiaries />,
-    },
+    { label: "Pay", icon: <FaMoneyBill />, component: <Pay /> },
+    { label: "Beneficiaries", icon: <FaUserFriends />, component: <Beneficiaries /> },
     { label: "Profile", icon: <FaUser />, component: <Profile /> },
   ];
-
-
 
   return (
     <div>
@@ -53,6 +60,11 @@ const MainPage = () => {
         {showNotifications ? (
           <div className="mt-4">
             <h1 className="text-xl font-semibold">Notifications</h1>
+          </div>
+        ) : settingPage ? (
+          <div className="mt-4 flex space-x-2">
+            <FaArrowLeft className="mt-2 cursor-pointer" onClick={handleBackClick} />
+            <h1 className="text-xl font-semibold">Settings</h1>
           </div>
         ) : activeTab !== "Home" ? (
           <div className="mt-4">
@@ -69,7 +81,7 @@ const MainPage = () => {
         <div className="flex space-x-2">
           <FaBell className="w-6 h-5 mt-4" onClick={handleBellClick} />
           {activeTab === "Profile" ? (
-            <FaCog className="w-6 h-5 mt-4" />
+            <FaCog className="w-6 h-5 mt-4" onClick={handleSettingClick} />
           ) : (
             <img
               src={ProfileImg}
@@ -81,22 +93,25 @@ const MainPage = () => {
       </div>
 
       <Tabs activeTab={activeTab} setActiveTab={handleTabClick}>
-    {tabLabels.map((tab) => (
-        <TabPanel
+        {tabLabels.map((tab) => (
+          <TabPanel
             key={tab.label}
             label={tab.label}
             icon={tab.icon}
             activeTab={activeTab}
-        >
+          >
             {showNotifications && clickedTab === tab.label ? (
-                <Notification />
+              <Notification />
+            ) : settingPage ? (
+              <Setting />
+            ) : tab.label === 'Home' && topDone ? (
+              <TopUp />
             ) : (
-                tab.label === 'Home' && topDone ? <TopUp /> : tab.component
+              tab.component
             )}
-        </TabPanel>
-    ))}
-</Tabs>
-
+          </TabPanel>
+        ))}
+      </Tabs>
     </div>
   );
 };
