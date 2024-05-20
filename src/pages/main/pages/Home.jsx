@@ -84,7 +84,7 @@ const Home = () => {
   }, [isImageClicked]);
 
   useEffect(() => {
-    const scrollThreshold = 50; // Adjust this threshold as needed
+    const scrollThreshold = 500; // Adjust this threshold as needed
   
     const handleTouchStart = (e) => {
       touchStart.current = e.touches[0].clientX;
