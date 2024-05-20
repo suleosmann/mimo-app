@@ -12,7 +12,12 @@ import kra from "../../../assets/kra.png";
 
 import { useWalletStore } from "../../../stores/useWalletStore";
 
+
+
 const Home = () => {
+
+  const touchStart = useRef(null); // Define useRef here
+
   const images = [
     {
       name: "Home",
@@ -79,7 +84,6 @@ const Home = () => {
   }, [isImageClicked]);
 
   useEffect(() => {
-    const touchStart = useRef(null);
     const scrollThreshold = 50; // Adjust this threshold as needed
   
     const handleTouchStart = (e) => {

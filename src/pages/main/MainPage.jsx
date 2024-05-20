@@ -23,7 +23,7 @@ const MainPage = () => {
   const { user } = useUserStore(); 
   const { topDone, setTopDone } = useWalletStore();
   const { settingPage, setSettingPage, beneficiaryPage, setBeneficiaryPage } = useNavigateStore();
-
+  
   const handleSettingClick = () => {
     setSettingPage(true);
   };
