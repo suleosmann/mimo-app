@@ -217,7 +217,7 @@ const Home = () => {
         </div>
       </div>
       {isImageClicked && (
-        <div className="absolute bg-custom-dark-green w-full h-[480px] top-[195px] z-10 text-center">
+        <div className="absolute bg-custom-dark-green w-full h-[369px] top-[195px] z-10 text-center">
           <h1 className="mt-20 mb-6 text-xs text-white font-bold">
             Tap on card to close
           </h1>
