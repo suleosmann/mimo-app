@@ -79,36 +79,50 @@ const Home = () => {
   }, [isImageClicked]);
 
   useEffect(() => {
-    const handleWheel = (e) => {
+    const touchStart = useRef(null);
+    const scrollThreshold = 50; // Adjust this threshold as needed
+  
+    const handleTouchStart = (e) => {
+      touchStart.current = e.touches[0].clientX;
+    };
+  
+    const handleTouchMove = (e) => {
       if (isImageClicked) {
         return; // Prevent scrolling when the image is in the small state
       }
-
-      if (scrollDelayTimeout.current) {
-        clearTimeout(scrollDelayTimeout.current);
-      }
-
-      scrollDelayTimeout.current = setTimeout(() => {
-        if (e.deltaY < 0) {
-          // Scroll up or left
+  
+      const touchEnd = e.touches[0].clientX;
+      const diff = touchStart.current - touchEnd;
+  
+      if (Math.abs(diff) > scrollThreshold) {
+        if (diff > 0) {
+          // Swiped left
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % imagesLength);
+        } else {
+          // Swiped right
           setCurrentIndex((prevIndex) =>
             prevIndex === 0 ? imagesLength - 1 : prevIndex - 1
           );
-        } else {
-          // Scroll down or right
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % imagesLength);
         }
-      }, scrollDelay);
+      }
     };
-
+  
+    const handleTouchEnd = () => {
+      touchStart.current = null;
+    };
+  
     const containerElement = containerRef.current;
-    containerElement.addEventListener("wheel", handleWheel, { passive: true });
-
+    containerElement.addEventListener("touchstart", handleTouchStart, { passive: true });
+    containerElement.addEventListener("touchmove", handleTouchMove, { passive: true });
+    containerElement.addEventListener("touchend", handleTouchEnd);
+  
     return () => {
-      containerElement.removeEventListener("wheel", handleWheel);
-      clearTimeout(scrollDelayTimeout.current);
+      containerElement.removeEventListener("touchstart", handleTouchStart);
+      containerElement.removeEventListener("touchmove", handleTouchMove);
+      containerElement.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [imagesLength, scrollDelay, isImageClicked]);
+  }, [imagesLength, isImageClicked]);
+  
 
   const previousIndex =
     currentIndex === 0 ? imagesLength - 1 : currentIndex - 1;
