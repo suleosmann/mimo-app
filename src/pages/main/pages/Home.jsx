@@ -84,7 +84,7 @@ const Home = () => {
   }, [isImageClicked]);
 
   useEffect(() => {
-    const scrollThreshold = 500; // Adjust this threshold as needed
+    const scrollThreshold = 60; // Adjust this threshold as needed
   
     const handleTouchStart = (e) => {
       touchStart.current = e.touches[0].clientX;
@@ -290,7 +290,7 @@ const Home = () => {
               >
                 <div className="space-y-2 mt-2 text-center">
                   <h1 className="font-bold text-custom-green text-bold text-lg">
-                    ADD 
+                    + ADD 
                   </h1>
                 </div>
               </div>

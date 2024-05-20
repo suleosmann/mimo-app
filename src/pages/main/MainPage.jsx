@@ -55,7 +55,7 @@ const MainPage = () => {
   ];
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col">
       <div className="flex-grow">
         <div className="flex justify-between mt-6 mx-8 text-custom-dark-green">
           {showNotifications ? (
@@ -122,19 +122,7 @@ const MainPage = () => {
         </Tabs>
       </div>
       
-      {/* Bottom Tabs */}
-      <div className="flex justify-between bg-gray-200 p-4">
-        {tabLabels.map((tab) => (
-          <div
-            key={tab.label}
-            className={`flex flex-col items-center w-full cursor-pointer ${activeTab === tab.label ? 'text-custom-dark-green' : 'text-gray-500'}`}
-            onClick={() => handleTabClick(tab.label)}
-          >
-            {tab.icon}
-            <span className="text-xs">{tab.label}</span>
-          </div>
-        ))}
-      </div>
+      
     </div>
   );
 };
