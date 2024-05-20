@@ -13,62 +13,53 @@ import kra from "../../../assets/kra.png";
 import { useWalletStore } from "../../../stores/useWalletStore";
 
 const Home = () => {
-  const { topDone, setTopDone } = useWalletStore();
-
   const images = [
     {
+      name: "Home",
       image: TowersImg,
       logo: kplc,
-      title: "Electricity",
+      title: "KPLC",
       description: "Pay your electricity bills",
-      billers: ["KPLC", "KenGen"],
     },
     {
+      name: "Dad's Pension",
       image: NairbiHq,
       logo: nssf,
-      title: "Water",
-      description: "Pay your water bills",
-      billers: ["Nairobi Water", "Mombasa Water"],
+      title: "NSSF",
+      description: "Pay your Service Fund",
     },
     {
-      image: image3,
-      logo: kra,
-      title: "Internet",
-      description: "Pay your internet bills",
-      billers: ["Zuku", "Safaricom"],
-    },
-    {
+      name: "Business Taxes",
       image: image1,
-      logo: kplc,
-      title: "Television",
-      description: "Pay your TV subscription",
-      billers: ["DSTV", "GoTV"],
-    },
-    {
-      image: image2,
-      logo: nssf,
-      title: "Phone",
-      description: "Pay your phone bills",
-      billers: ["Airtel", "Safaricom"],
+      logo: kra,
+      title: "Kra",
+      description: "Pay Electricity",
     },
   ];
+  
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isImageClicked, setIsImageClicked] = useState(false);
   const [isVisible, setIsVisible] = useState(!isImageClicked);
-  const [moneyClick, setMoneyClick] = useState(false)
-  const [billerContainer, setBillerContainer] = useState(false)
-
+  const [moneyClick, setMoneyClick] = useState(false);
+  const [billerContainer, setBillerContainer] = useState(false);
+  const [addBill, setAddBill] = useState(false)
 
   const handleMoneyClick = () => {
     setMoneyClick((prev) => !prev);
-  }
+  };
+  const handleBillClick = () => {
+    setAddBill((prev) => !prev);
+    setBillerContainer(false);
+
+  };
 
   const handleBillerClick = () => {
     setBillerContainer((prev) => !prev);
-    console.log("Clicked")
-
-  }
+    console.log("Clicked");
+    setAddBill(false)
+    
+  };
 
   const imagesLength = images.length;
   const containerRef = useRef(null);
@@ -129,10 +120,7 @@ const Home = () => {
 
   const handleCurrentImageClick = () => {
     setIsImageClicked((prev) => !prev);
-  };
-
-  const handleTopUpClick = () => {
-    setTopDone(true);
+    setBillerContainer(false);
   };
 
   return (
@@ -144,17 +132,13 @@ const Home = () => {
         <div className="flex justify-center items-center text-custom-green font-bold space-x-4">
           <div className="flex items-baseline space-x-1">
             <span className="text-xs">KES</span>
-            <h1 className="text-2xl" onClick={handleMoneyClick}>176,239.90</h1>
+            <h1 className="text-2xl" onClick={handleMoneyClick}>
+              176,239.90
+            </h1>
           </div>
-          
-          {/* <button
-            className="bg-custom-green rounded-lg text-white text-sm py-2 px-3"
-            onClick={handleTopUpClick}
-          >
-            Top Up
-          </button> */}
         </div>
-        {moneyClick && (<div className="space-y-2 text-sm ml-24 w-[208px] h-[78px] bg-white rounded-lg">
+        {moneyClick && (
+          <div className="space-y-2 text-sm ml-24 w-[208px] h-[78px] bg-white rounded-lg">
             <div className="flex space-x-20 mx-1 pt-2">
               <h1 className="opacity-70">Cash back</h1>
               <h1 className="text-custom-green font-bold">345.89</h1>
@@ -163,11 +147,12 @@ const Home = () => {
               <h1 className="pr-14 opacity-70">Social Services Contribution</h1>
               <h1 className="mr-4 text-custom-green font-bold">00.00</h1>
             </div>
-        </div>)}
+          </div>
+        )}
       </div>
       <div ref={containerRef} className="z-30">
         <div className="relative h-[420px] w-[390px]">
-          <div className="flex ml-6 absolute top-[30px] gap-[12px] z-20">
+          <div className="flex ml-6 absolute top-[50px] gap-[12px] ">
             {previousImage && (
               <div
                 className={`h-[370px] w-[52px] pt-2.5 rounded-lg transition-opacity duration-500 ease-in-out ${
@@ -177,7 +162,7 @@ const Home = () => {
               />
             )}
             <div
-              className={`relative w-[208px] rounded-lg cursor-pointer bg-cover bg-center`}
+              className={`relative w-[208px] rounded-lg cursor-pointer bg-cover bg-center z-20 bg-red-500`}
               style={{
                 backgroundImage: `url(${currentImage.image})`,
                 height: isImageClicked ? "150px" : "350px",
@@ -214,30 +199,85 @@ const Home = () => {
         </div>
       </div>
       {isImageClicked && (
-        <div className="absolute bg-custom-dark-green w-full h-[450px] top-[195px] z-10 text-center">
-          <div className="flex mt-20 space-x-4 mx-3">
-            <div className="w-[110px] h-[97px] bg-white rounded-lg" onClick={handleBillerClick}
-            >
-              <div className="space-y-6 mt-2">
-              <h1>Text Here</h1>
-              <h1>Text Here</h1>
+        <div className="absolute bg-custom-dark-green w-full h-[480px] top-[195px] z-10 text-center">
+          <h1 className="mt-20 mb-6 text-xs text-white font-bold">
+            Tap on card to close
+          </h1>
+          <div className="flex justify-center space-x-4 mx-3">
+            {!addBill && (<div>
+            {billerContainer  ? (
+              <div
+                className="w-64  bg-gray-200 rounded-lg p-4 mr-4"
+                onClick={handleBillerClick}
+              >
+                <h1 className="font-bold text-center">{currentImage.title}</h1>
+                <h1 className="text-center mt-4">123456789</h1>
+                <div className="mt-4 text-start text-sm">
+                  <label className="mr-2 ml-1">Enter Amount</label>
+                  <div className="flex">
+                    <input
+                      type="text"
+                      placeholder="Enter Amount"
+                      className="border rounded-lg p-2 w-full mr-2 bg-custom-dark-green"
+                    />
+                    <button className="bg-custom-green text-custom-dark-green font-bold rounded-lg p-2 px-4">
+                      PAY
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="w-[110px] h-[97px] bg-white rounded-lg" onClick={handleBillerClick}
-            >
-              <div className="space-y-6 mt-2">
-              <h1>Text Here</h1>    
-              <h1>Text Here</h1>
+            ) : (
+              <div
+                className="w-[140px] h-[97px] bg-white rounded-lg flex flex-col justify-center items-center"
+                onClick={handleBillerClick}
+              >
+                <div className="space-y-2 mt-2 text-center">
+                  <h1 className="font-bold text-custom-green">
+                    {currentImage.name}
+                  </h1>
+                  <h1 className="text-gray-700">123456789</h1>
+                </div>
               </div>
-            </div>
-            <div className="w-[110px] h-[97px] bg-white rounded-l ${billerContainer" onClick={handleBillerClick}
-            >
-              <div className="space-y-6 mt-2">
-              <h1>Text Here</h1>
-              <h1>Text Here</h1>
+            )}
+            </div>)}
+            {!billerContainer &&(<div>
+            {addBill ? (
+              <div
+                className="w-64   bg-gray-200 rounded-lg p-4 "
+                onClick={handleBillClick}
+              >
+                <h1 className="font-bold text-center">{currentImage.title}</h1>
+                <div className="mt-4 text-start text-sm">
+                  <div className="space-y-2">
+                    <input
+                      type="text"
+                      placeholder="Enter Name"
+                      className="border rounded-lg p-2 w-full mr-2 bg-custom-dark-green"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Enter Account Number"
+                      className="border rounded-lg p-2 w-full mr-2 bg-custom-dark-green"
+                    />
+                    <button className="bg-custom-green w-full text-custom-dark-green font-bold rounded-lg p-2 px-4">
+                      Submit
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-            
+            ) : (
+              <div
+                className="w-[140px] h-[97px] bg-white rounded-lg flex flex-col justify-center items-center"
+                onClick={handleBillClick}
+              >
+                <div className="space-y-2 mt-2 text-center">
+                  <h1 className="font-bold text-custom-green text-bold text-lg">
+                    ADD 
+                  </h1>
+                </div>
+              </div>
+            )}
+            </div>)}
           </div>
         </div>
       )}

@@ -5,9 +5,9 @@
       "firstName": "Suleiman",
       "middleName": "M.",
       "lastName": "Osman",
-      "nationalId": "36783360",
+      "nationalId": "36773366",
       "phoneNumber": "254123456789",
-      "pin": "1234",
+      "pin": "1111",
       "otp": "12345"
     },
     {
@@ -24,16 +24,6 @@
       "id": "3",
       "nationalId": "12345678",
       "phoneNumber": "254987654321"
-    },
-    {
-      "id": "4",
-      "nationalId": "12345678",
-      "phoneNumber": "254123456789"
-    },
-    {
-      "id": "5",
-      "nationalId": "36783360",
-      "phoneNumber": "254123456789"
     }
   ]
 }

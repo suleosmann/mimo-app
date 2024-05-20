@@ -4,9 +4,8 @@ import Tabs from "./Tabs";
 import Home from "./pages/Home";
 import Statements from "./pages/Statements";
 import Pay from "./pages/wallet/Pay";
-import Beneficiaries from "./pages/Beneficiaries";
 import Profile from "./pages/Profile";
-import { FaArrowLeft, FaHome, FaFileAlt, FaUserFriends, FaUser, FaBell, FaCog, FaMoneyBill } from "react-icons/fa";
+import { FaArrowLeft, FaHome, FaFileAlt, FaUser, FaBell, FaCog, FaQrcode } from "react-icons/fa";
 import ProfileImg from "../../assets/ladydoll.jpeg";
 import Notification from "./pages/Notification";
 import { useUserStore } from "../../stores/useUserStore"; 
@@ -14,6 +13,8 @@ import TopUp from ".././main/pages/wallet/TopUp";
 import { useWalletStore } from '../../stores/useWalletStore';
 import { useNavigateStore } from '../../stores/useNavigateStore';
 import Setting from './pages/Settings';
+import Beneficiaries from "./pages/Beneficiaries";
+
 
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -22,7 +23,7 @@ const MainPage = () => {
 
   const { user } = useUserStore(); 
   const { topDone, setTopDone } = useWalletStore();
-  const { settingPage, setSettingPage } = useNavigateStore();
+  const { settingPage, setSettingPage, beneficiaryPage, setBeneficiaryPage } = useNavigateStore();
 
   const handleSettingClick = () => {
     setSettingPage(true);
@@ -38,7 +39,8 @@ const MainPage = () => {
     setShowNotifications(false);
     setClickedTab(tabLabel);
     setTopDone(false);
-    setSettingPage(false); // Ensure Settings page is hidden
+    setSettingPage(false); 
+    setBeneficiaryPage(false)
   };
 
   const handleBackClick = () => {
@@ -49,14 +51,13 @@ const MainPage = () => {
   const tabLabels = [
     { label: "Home", icon: <FaHome />, component: <Home /> },
     { label: "Statements", icon: <FaFileAlt />, component: <Statements /> },
-    { label: "Pay", icon: <FaMoneyBill />, component: <Pay /> },
-    { label: "Beneficiaries", icon: <FaUserFriends />, component: <Beneficiaries /> },
+    { label: "Scan", icon: <FaQrcode />, component: <Pay /> },
     { label: "Profile", icon: <FaUser />, component: <Profile /> },
   ];
 
   return (
     <div>
-      <div className="flex justify-between mt-16 mx-8 text-custom-dark-green">
+      <div className="flex justify-between mt-6 mx-8 text-custom-dark-green">
         {showNotifications ? (
           <div className="mt-4">
             <h1 className="text-xl font-semibold">Notifications</h1>
@@ -66,7 +67,12 @@ const MainPage = () => {
             <FaArrowLeft className="mt-2 cursor-pointer" onClick={handleBackClick} />
             <h1 className="text-xl font-semibold">Settings</h1>
           </div>
-        ) : activeTab !== "Home" ? (
+        )   : beneficiaryPage ? (
+          <div className="mt-4">
+            <h1 className="text-xl font-semibold">Beneficiary</h1>
+          </div>
+
+        ): activeTab !== "Home" ? (
           <div className="mt-4">
             <h1 className="text-xl font-semibold">{activeTab}</h1>
           </div>
@@ -106,7 +112,9 @@ const MainPage = () => {
               <Setting />
             ) : tab.label === 'Home' && topDone ? (
               <TopUp />
-            ) : (
+            ) : beneficiaryPage ? (
+              <Beneficiaries/>
+            ): (
               tab.component
             )}
           </TabPanel>

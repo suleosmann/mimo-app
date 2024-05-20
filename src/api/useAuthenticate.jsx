@@ -1,6 +1,7 @@
 import { useAuthStore } from '../stores/useAuthStore';
 import { useUserStore } from '../stores/useUserStore'; // Import useUserStore
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import db from '../db.json'; // Import the JSON data
 
 const useAuthenticate = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -18,27 +19,18 @@ const useAuthenticate = () => {
     setError
   } = useAuthStore();
 
-  const { user, setUser } = useUserStore();
+  const { setUser } = useUserStore();
 
   const register = async (nationalId, phoneNumber) => {
     try {
-      const response = await fetch('http://3.127.183.100:8087/api/v1/patient', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ nationalId, phoneNumber }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData);
-      }
-
-      const data = await response.json();
-      console.log(data);
-      setUser(data);
-      console.log(user)
+      const newUser = {
+        id: String(db.users.length + 1),
+        nationalId,
+        phoneNumber,
+        otp: '12345', // You might want to generate this dynamically
+        pin: null
+      };
+      db.users.push(newUser);
       console.log('Registration successful');
       setVerified(true);
     } catch (error) {
@@ -49,23 +41,15 @@ const useAuthenticate = () => {
 
   const verifyOtp = async (nationalId, phoneNumber, otpCode) => {
     try {
-      const response = await fetch('http://3.127.183.100:8087/api/v1/patient/validate-phone-number', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ nationalId, phone: phoneNumber, otp: otpCode.join('') }),
-      });
+      const user = db.users.find(user => user.nationalId === nationalId && user.phoneNumber === phoneNumber);
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData);
+      if (user && user.otp === otpCode.join('')) {
+        console.log('OTP verification successful');
+        setOpenPin(true);
+      } else {
+        setError('Invalid OTP');
+        console.log('Failed to verify OTP: Invalid OTP');
       }
-
-      const data = await response.json();
-      console.log(data);
-      console.log('OTP verification successful');
-      setOpenPin(true);
     } catch (error) {
       setError(error.message);
       console.log('Failed to verify OTP:', error.message);
@@ -74,51 +58,36 @@ const useAuthenticate = () => {
 
   const createPin = async (nationalId, pinCode) => {
     try {
-      const response = await fetch('http://3.127.183.100:8087/api/v1/set-new-pin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ nationalId, pin: pinCode.join('') }),
-      });
+      const userIndex = db.users.findIndex(user => user.nationalId === nationalId);
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData);
+      if (userIndex !== -1) {
+        db.users[userIndex].pin = pinCode;
+        console.log('Pin set successfully');
+        setAuthType('login');
+        setVerified(false);
+      } else {
+        setError('User not found');
+        console.log('Failed to set pin: User not found');
       }
-
-      const data = await response.json();
-      console.log(data);
-      console.log('Pin set successfully');
-      setAuthType('login');
-      setVerified(false);
     } catch (error) {
       setError(error.message);
       console.log('Failed to set pin:', error.message);
     }
   };
 
-  const login = async (nationalId, pin) => {
+  const login = async (nationalId, pinCode) => {
     try {
-      const response = await fetch('http://3.127.183.100:8087/api/v1/log-in', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ nationalId, pin }),
-      });
+      const user = db.users.find(user => user.nationalId === nationalId && user.pin === pinCode);
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData);
+      if (user) {
+        setUser(user); // Capture user info in user store
+        setAuthDone(true);
+        console.log('Authentication successful');
+        navigate('/main'); // Redirect to /main on successful login
+      } else {
+        setError('Invalid credentials');
+        console.log('Failed to authenticate: Invalid credentials');
       }
-
-      const data = await response.json();
-      console.log(data);
-      setUser(data); // Capture user info in user store
-      setAuthDone(true);
-      console.log('Authentication successful');
-      navigate('/main'); // Redirect to /main on successful login
     } catch (error) {
       setError(error.message);
       console.log('Failed to authenticate:', error.message);

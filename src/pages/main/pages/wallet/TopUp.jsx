@@ -5,7 +5,7 @@ import CashbackRewards from './CashbackRewards';
 
 
 const TopUp = () => {
-  const types = ["M-pesa", "Cash", "PesaLink", "RTGS"];
+  const types = ["M-pesa", "PesaLink", "RTGS"];
   const [selectedType, setSelectedType] = useState("M-pesa");
   const [showList, setShowList] = useState(false);
 
@@ -69,18 +69,7 @@ const TopUp = () => {
             </ol>
           </div>
         )}
-        {selectedType === "Cash" && (
-          <div className=" pr-10 mt-8 " id="Cash">
-            <p>
-              To top up your wallet using cash, visit any Stanbic Bank Branch
-              with the following details.
-            </p>
-            <p>
-              Account name as Stanbic Statutory Payments and account number as
-              1115510000348
-            </p>
-          </div>
-        )}
+        
         {selectedType === "M-pesa" && (
           <div className=" mx-2 mt-8 ml-5" id="M-pesa">
             <div className="flex space-x-2">

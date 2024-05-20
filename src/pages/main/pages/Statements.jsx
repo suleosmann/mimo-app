@@ -1,122 +1,46 @@
-import React from 'react'
-import { FaBell } from "react-icons/fa";
+import React from 'react';
 import ProfileImg from "../../../assets/ladydoll.jpeg";
 
 const Statements = () => {
-  
+  const statements = [
+    { date: '20 May 2024', entityName: 'KPLC', accountNumber: '276530742', amount: '-KSH. 1,986.00', time: '12:38 PM' },
+    { date: '20 May 2024', entityName: 'NSSF', accountNumber: '276530742', amount: '+KSH. 2,500.00', time: '12:38 PM' },
+    { date: '20 May 2024', entityName: 'KRA', accountNumber: '276530742', amount: '-KSH. 3,000.00', time: '12:38 PM' },
+    { date: '17 May 2024', entityName: 'KPLC', accountNumber: '276530742', amount: '+KSH. 1,000.00', time: '12:38 PM' },
+    { date: '17 May 2024', entityName: 'NSSF', accountNumber: '276530742', amount: '-KSH. 500.00', time: '12:38 PM' },
+    { date: '14 May 2024', entityName: 'KRA', accountNumber: '276530742', amount: '-KSH. 2,000.00', time: '12:38 PM' },
+    { date: '14 May 2024', entityName: 'KPLC', accountNumber: '276530742', amount: '+KSH. 1,200.00', time: '12:38 PM' },
+    { date: '14 May 2024', entityName: 'NSSF', accountNumber: '276530742', amount: '-KSH. 1,800.00', time: '12:39 PM' },
+    { date: '12 May 2024', entityName: 'KRA', accountNumber: '276530742', amount: '+KSH. 3,500.00', time: '12:38 PM' },
+    { date: '11 May 2024', entityName: 'KPLC', accountNumber: '276530742', amount: '-KSH. 1,000.00', time: '12:38 PM' },
+  ];
 
   return (
-    <div className='mx-8 '>
-      
-      <div className="flex justify-between  text-black">
-        <div className="mt-4 ">
-          <h1 className="text-xl font-normal">30 Nov 2023</h1>
-        </div>
-        <div className="flex flex-col space-y-0.5 mt-4 mr-4 justify-center">
-          <span className='border-b-4 w-7 border-gray-700'></span>
-          <span className='border-b-4 w-5 border-gray-700 ml-1'></span>
-          <span className='border-b-4 w-3 border-gray-700 ml-2'></span>
-        </div>
+    <div className='mx-8'>
+      <div className='h-[580px] w-[294px]'>
+        {statements.map((statement, index) => (
+          <div className='mt-6' key={index}>
+            {(index === 0 || statement.date !== statements[index - 1]?.date) && (
+              <h1 className='font-bold text-sm'>{statement.date}</h1>
+            )}
+            <div className='flex justify-between text-sm w-[294px] h-[30px]'>
+              <div className='flex my-3 font-xs'>
+                <div className='bg-gray-300 h-[30px] w-[30px] rounded-full'></div>
+                <div className='ml-2'>
+                  <h1 className='font-bold'>{statement.entityName}</h1>
+                  <h1 className='text-gray-600'>{statement.accountNumber}</h1>
+                </div>
+              </div>
+              <div className='text-right text-xs'>
+                <h1 className={`font-bold ${statement.amount.startsWith('+') ? 'text-custom-green' : 'text-red-600'}`}>{statement.amount}</h1>
+                <h1>{statement.time}</h1>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-      <div className='mt-4 ' >
-        <table className='w-full text-sm ' >
-          <thead className='border-b-2 border-gray-300'>
-            <tr >
-              <th className='pr-12'>Date MMHH</th>
-              <th >Amount</th>
-              <th className='pl-16'>Description</th>
-            </tr>
-          </thead>
-          <tbody >
-          <tr >
-              <td className='pl-2 pr-4 pt-2' style={{ whiteSpace: "nowrap" }}>30 Nov 2023 08:00</td>
-              <td className='pl-4 pt-2'>700</td>
-              <td className='pl-20  pt-2'>Electricity</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>30 Nov 2023 12:30</td>
-              <td className='pl-4 pt-2'>1500</td>
-              <td className='pl-20 pt-2'>Hospital</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>30 Nov 2023 18:45</td>
-              <td className='pl-4 pt-2'>5000</td>
-              <td className='pl-20 pt-2'>Kenya</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>30 Nov 2023 08:00</td>
-              <td className='pl-4 pt-2'>700</td>
-              <td className='pl-20 pt-2'>Electricity</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>30 Nov 2023 12:30</td>
-              <td className='pl-4 pt-2'>1500</td>
-              <td className='pl-20 pt-2'>Hospital</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>30 Nov 2023 18:45</td>
-              <td className='pl-4 pt-2'>5000</td>
-              <td className='pl-20 pt-2'>Kenya</td>
-            </tr>
-            
-            
-          </tbody>
-        </table>
-      </div>
-      <div className="flex justify-between  text-black">
-        <div className="mt-4 ">
-          <h1 className="text-xl font-normal">29 Nov 2023</h1>
-        </div>
-        
-      </div>
-      <div className='mt-4' >
-        <table className='w-full text-sm' >
-          <thead className='border-b-2 border-gray-300'>
-            <tr >
-              <th className='pr-12'>Date MMHH</th>
-              <th >Amount</th>
-              <th className='pl-16'>Description</th>
-            </tr>
-          </thead>
-          <tbody >
-          <tr >
-              <td className='pl-2 pr-2 pt-2' style={{ whiteSpace: "nowrap" }}>29 Nov 2023 08:00</td>
-              <td className='pl-4 pt-2'>700</td>
-              <td className='pl-20 pt-2'>Electricity</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>29 Nov 2023 12:30</td>
-              <td className='pl-4 pt-2'>1500</td>
-              <td className='pl-20 pt-2'>Hospital</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>29 Nov 2023 18:45</td>
-              <td className='pl-4 pt-2'>5000</td>
-              <td className='pl-20 pt-2'>Kenya</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>29 Nov 2023 08:00</td>
-              <td className='pl-4 pt-2'>700</td>
-              <td className='pl-20 pt-2'>Electricity</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>29 Nov 2023 12:30</td>
-              <td className='pl-4 pt-2'>1500</td>
-              <td className='pl-20 pt-2'>Hospital</td>
-            </tr>
-            <tr >
-              <td className='pl-2 pt-2'>29 Nov 2023 18:45</td>
-              <td className='pl-4 pt-2'>5000</td>
-              <td className='pl-20 pt-2'>Kenya</td>
-            </tr>
-            
-            
-          </tbody>
-        </table>
-      </div>
-      
     </div>
-  )
-}
+  );
+};
 
-export default Statements
+export default Statements;

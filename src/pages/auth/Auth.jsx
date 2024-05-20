@@ -1,11 +1,10 @@
-import {useEffect} from "react"
+import { useEffect, useRef } from "react";
 import MiMo_logo from "../../assets/MiMo_logo.png";
 import ladydoll from "../../assets/ladydoll.jpeg";
 import WhiteShirtMan from "../../assets/whiteshirtmale.jpeg";
 import useAuthenticate from "../../api/useAuthenticate";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { useNavigate } from 'react-router-dom';
-
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -30,6 +29,9 @@ const Auth = () => {
     error
   } = useAuthStore();
 
+  const otpRefs = useRef([]);
+  const pinRefs = useRef([]);
+
   const handleAuthType = (type) => {
     setAuthType(type);
   };
@@ -40,12 +42,20 @@ const Auth = () => {
     const newOtpCode = [...otpCode];
     newOtpCode[index] = value;
     setOtpCode(newOtpCode);
+
+    if (value !== "" && index < otpRefs.current.length - 1) {
+      otpRefs.current[index + 1].focus();
+    }
   };
 
   const handlePinChange = (index, value) => {
     const newPinCode = [...pinCode];
     newPinCode[index] = value;
     setPinCode(newPinCode);
+
+    if (value !== "" && index < pinRefs.current.length - 1) {
+      pinRefs.current[index + 1].focus();
+    }
   };
 
   const handleSendOtp = async () => {
@@ -65,7 +75,6 @@ const Auth = () => {
       navigate('/main');
     }
   }, [authType, authDone, navigate]);
-  
 
   return (
     <div
@@ -162,6 +171,7 @@ const Auth = () => {
                     value={digit}
                     maxLength="1"
                     onChange={(e) => handleOtpInputChange(index, e.target.value)}
+                    ref={(el) => (otpRefs.current[index] = el)}
                     className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
                     placeholder="_"
                   />
@@ -182,6 +192,7 @@ const Auth = () => {
                     maxLength="1"
                     value={digit}
                     onChange={(e) => handlePinChange(index, e.target.value)}
+                    ref={(el) => (pinRefs.current[index] = el)}
                     className="bg-custom-pastel bg-opacity-60 border-2 border-custom-green border-dotted rounded-lg w-[47px] h-[40px] text-white font-bold text-3xl text-center"
                     placeholder="_"
                   />
@@ -195,7 +206,7 @@ const Auth = () => {
         </div>
         <div>
         {error && ( // Display error message
-            <p className="text-red-600 text-center mt-4">{error}</p>
+            <p className="text-red-600 text-center mt-4 absolute top-[590px] ml-32">{error}</p>
           )}
           <button
             onClick={

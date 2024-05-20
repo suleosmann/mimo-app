@@ -8,12 +8,12 @@ const Pay = () => {
 
   const handleEnterClick = () => {
     setEnterCode(true);
-    setScanSuccess(false); // Reset scan success state when switching to manual entry
+    setScanSuccess(false); 
   };
 
   const handleQrClick = () => {
     setEnterCode(false);
-    setScanSuccess(false); // Reset scan success state when switching to QR scan
+    setScanSuccess(false); 
   };
 
   const startScanning = () => {
