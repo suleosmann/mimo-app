@@ -22,10 +22,12 @@ const TopUp = () => {
       <div className="bg-red flex flex-wrap justify-between items-center px-6">
         {types.map((type, index) => (
           <button
-            key={index}
-            className="bg-custom-green text-white rounded-lg px-5 py-1 text-sm"
-            onClick={() => handleButtonClick(type)}
-          >
+          key={index}
+          className={`${
+            selectedType === type ? "bg-custom-green" : "bg-custom-pastel"
+          } text-white rounded-lg px-4 py-2 text-sm m-1 transition duration-300 ease-in-out`}
+          onClick={() => handleButtonClick(type)}
+        >
             {type}
           </button>
         ))}
@@ -33,7 +35,7 @@ const TopUp = () => {
       <div >
       <div className="ml-5">
         {selectedType === "PesaLink" && (
-          <div className="w-[370px] mx-5 h-[500px] mt-8" id="PesaLink">
+          <div className=" mx-5  mt-8" id="PesaLink">
             <ol className="list-decimal pr-8">
               <li>Select PesaLink on your Bank's menu</li>
               <li>Select "Send To Account" on the PesaLink menu options</li>
@@ -49,7 +51,7 @@ const TopUp = () => {
           </div>
         )}
         {selectedType === "RTGS" && (
-          <div className="w-[370px] mx-5 h-[500px] mt-8" id="RTGS">
+          <div className=" mx-5  mt-8" id="RTGS">
             <ol className="list-decimal pr-8">
               <li>Select RTGS/SWIFT on your Bank's menu</li>
               <li>Bank Name; Stanbic Bank</li>
@@ -68,7 +70,7 @@ const TopUp = () => {
           </div>
         )}
         {selectedType === "Cash" && (
-          <div className="w-[370px] pr-10 h-[500px] mt-8 " id="Cash">
+          <div className=" pr-10 mt-8 " id="Cash">
             <p>
               To top up your wallet using cash, visit any Stanbic Bank Branch
               with the following details.
@@ -80,7 +82,7 @@ const TopUp = () => {
           </div>
         )}
         {selectedType === "M-pesa" && (
-          <div className="w-[370px] mx-2 h-[500px] mt-8 ml-5" id="M-pesa">
+          <div className=" mx-2 mt-8 ml-5" id="M-pesa">
             <div className="flex space-x-2">
               <img src={Mpesa} alt="" className="w-20" />
               <h1 className="mt-3 text-xl font-semi-bold">Top-Up With Mpesa</h1>
@@ -100,7 +102,7 @@ const TopUp = () => {
             </div>
             <div className="mt-6 mr-6">
               <h1
-                className="text-center mr-14 p-2 px-4 border-2 border-gray-400 my-4 cursor-pointer flex justify-between items-center"
+                className="text-center mr-8 py-2 px-4 border-2 border-gray-400 my-4 cursor-pointer flex justify-between items-center"
                 onClick={toggleList}
               >
                 Top Up Manually {showList ? <FaChevronUp /> : <FaChevronDown />}
@@ -124,9 +126,7 @@ const TopUp = () => {
         )}
       </div>
       </div>
-      {/* <div className="mb-32">
-      <CashbackRewards/>
-      </div> */}
+      
       
     </>
   );

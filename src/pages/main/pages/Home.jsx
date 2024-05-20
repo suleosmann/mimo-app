@@ -56,6 +56,19 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isImageClicked, setIsImageClicked] = useState(false);
   const [isVisible, setIsVisible] = useState(!isImageClicked);
+  const [moneyClick, setMoneyClick] = useState(false)
+  const [billerContainer, setBillerContainer] = useState(false)
+
+
+  const handleMoneyClick = () => {
+    setMoneyClick((prev) => !prev);
+  }
+
+  const handleBillerClick = () => {
+    setBillerContainer((prev) => !prev);
+    console.log("Clicked")
+
+  }
 
   const imagesLength = images.length;
   const containerRef = useRef(null);
@@ -131,15 +144,26 @@ const Home = () => {
         <div className="flex justify-center items-center text-custom-green font-bold space-x-4">
           <div className="flex items-baseline space-x-1">
             <span className="text-xs">KES</span>
-            <h1 className="text-2xl">176,239.90</h1>
+            <h1 className="text-2xl" onClick={handleMoneyClick}>176,239.90</h1>
           </div>
-          <button
+          
+          {/* <button
             className="bg-custom-green rounded-lg text-white text-sm py-2 px-3"
             onClick={handleTopUpClick}
           >
             Top Up
-          </button>
+          </button> */}
         </div>
+        {moneyClick && (<div className="space-y-2 text-sm ml-24 w-[208px] h-[78px] bg-white rounded-lg">
+            <div className="flex space-x-20 mx-1 pt-2">
+              <h1 className="opacity-70">Cash back</h1>
+              <h1 className="text-custom-green font-bold">345.89</h1>
+            </div>
+            <div className="flex">
+              <h1 className="pr-14 opacity-70">Social Services Contribution</h1>
+              <h1 className="mr-4 text-custom-green font-bold">00.00</h1>
+            </div>
+        </div>)}
       </div>
       <div ref={containerRef} className="z-30">
         <div className="relative h-[420px] w-[390px]">
@@ -191,22 +215,29 @@ const Home = () => {
       </div>
       {isImageClicked && (
         <div className="absolute bg-custom-dark-green w-full h-[450px] top-[195px] z-10 text-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-20 mx-16">
-            {currentImage.billers.map((biller, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-lg"
-              >
-                <h2 className="text-2xl font-bold  text-custom-green">
-                  {currentImage.title}
-                </h2>
-                <p className="mb-4 text-custom-green">{currentImage.description}</p>
-                <h3 className="text-xl font-semibold  text-custom-green">
-                  Biller:
-                </h3>
-                <p className="text-custom-green">{biller}</p>
+          <div className="flex mt-20 space-x-4 mx-3">
+            <div className="w-[110px] h-[97px] bg-white rounded-lg" onClick={handleBillerClick}
+            >
+              <div className="space-y-6 mt-2">
+              <h1>Text Here</h1>
+              <h1>Text Here</h1>
               </div>
-            ))}
+            </div>
+            <div className="w-[110px] h-[97px] bg-white rounded-lg" onClick={handleBillerClick}
+            >
+              <div className="space-y-6 mt-2">
+              <h1>Text Here</h1>    
+              <h1>Text Here</h1>
+              </div>
+            </div>
+            <div className="w-[110px] h-[97px] bg-white rounded-l ${billerContainer" onClick={handleBillerClick}
+            >
+              <div className="space-y-6 mt-2">
+              <h1>Text Here</h1>
+              <h1>Text Here</h1>
+              </div>
+            </div>
+            
           </div>
         </div>
       )}

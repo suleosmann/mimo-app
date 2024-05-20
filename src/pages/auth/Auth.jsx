@@ -27,6 +27,7 @@ const Auth = () => {
     openPin,
     pinCode,
     setPinCode,
+    error
   } = useAuthStore();
 
   const handleAuthType = (type) => {
@@ -193,6 +194,9 @@ const Auth = () => {
           )}
         </div>
         <div>
+        {error && ( // Display error message
+            <p className="text-red-600 text-center mt-4">{error}</p>
+          )}
           <button
             onClick={
               verified
