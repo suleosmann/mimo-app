@@ -139,6 +139,8 @@ const Home = () => {
   const handleCurrentImageClick = () => {
     setIsImageClicked((prev) => !prev);
     setBillerContainer(false);
+    setAddBill(false);
+
   };
 
   return (
