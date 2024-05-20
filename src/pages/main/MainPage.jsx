@@ -15,7 +15,6 @@ import { useNavigateStore } from '../../stores/useNavigateStore';
 import Setting from './pages/Settings';
 import Beneficiaries from "./pages/Beneficiaries";
 
-
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState("Home");
   const [showNotifications, setShowNotifications] = useState(false);
@@ -56,70 +55,86 @@ const MainPage = () => {
   ];
 
   return (
-    <div>
-      <div className="flex justify-between mt-6 mx-8 text-custom-dark-green">
-        {showNotifications ? (
-          <div className="mt-4">
-            <h1 className="text-xl font-semibold">Notifications</h1>
-          </div>
-        ) : settingPage ? (
-          <div className="mt-4 flex space-x-2">
-            <FaArrowLeft className="mt-2 cursor-pointer" onClick={handleBackClick} />
-            <h1 className="text-xl font-semibold">Settings</h1>
-          </div>
-        )   : beneficiaryPage ? (
-          <div className="mt-4">
-            <h1 className="text-xl font-semibold">Beneficiary</h1>
-          </div>
+    <div className="flex flex-col h-screen">
+      <div className="flex-grow">
+        <div className="flex justify-between mt-6 mx-8 text-custom-dark-green">
+          {showNotifications ? (
+            <div className="mt-4">
+              <h1 className="text-xl font-semibold">Notifications</h1>
+            </div>
+          ) : settingPage ? (
+            <div className="mt-4 flex space-x-2">
+              <FaArrowLeft className="mt-2 cursor-pointer" onClick={handleBackClick} />
+              <h1 className="text-xl font-semibold">Settings</h1>
+            </div>
+          )   : beneficiaryPage ? (
+            <div className="mt-4">
+              <h1 className="text-xl font-semibold">Beneficiary</h1>
+            </div>
 
-        ): activeTab !== "Home" ? (
-          <div className="mt-4">
-            <h1 className="text-xl font-semibold">{activeTab}</h1>
-          </div>
-        ) : (
-          <div className="mt-4 font-montserrat">
-            <h1 className="text-sm">Morning</h1>
-            <h1 className="text-xl font-semibold">
-              {user ? `${user.firstName} ${user.lastName}` : "Jane Smith"}
-            </h1>
-          </div>
-        )}
-        <div className="flex space-x-2">
-          <FaBell className="w-6 h-5 mt-4" onClick={handleBellClick} />
-          {activeTab === "Profile" ? (
-            <FaCog className="w-6 h-5 mt-4" onClick={handleSettingClick} />
+          ): activeTab !== "Home" ? (
+            <div className="mt-4">
+              <h1 className="text-xl font-semibold">{activeTab}</h1>
+            </div>
           ) : (
-            <img
-              src={ProfileImg}
-              alt="Profile image"
-              className="w-[52px] h-[52px] rounded-full"
-            />
+            <div className="mt-4 font-montserrat">
+              <h1 className="text-sm">Morning</h1>
+              <h1 className="text-xl font-semibold">
+                {user ? `${user.firstName} ${user.lastName}` : "Jane Smith"}
+              </h1>
+            </div>
           )}
-        </div>
-      </div>
-
-      <Tabs activeTab={activeTab} setActiveTab={handleTabClick}>
-        {tabLabels.map((tab) => (
-          <TabPanel
-            key={tab.label}
-            label={tab.label}
-            icon={tab.icon}
-            activeTab={activeTab}
-          >
-            {showNotifications && clickedTab === tab.label ? (
-              <Notification />
-            ) : settingPage ? (
-              <Setting />
-            ) : tab.label === 'Home' && topDone ? (
-              <TopUp />
-            ) : beneficiaryPage ? (
-              <Beneficiaries/>
-            ): (
-              tab.component
+          <div className="flex space-x-2">
+            <FaBell className="w-6 h-5 mt-4" onClick={handleBellClick} />
+            {activeTab === "Profile" ? (
+              <FaCog className="w-6 h-5 mt-4" onClick={handleSettingClick} />
+            ) : (
+              <img
+                src={ProfileImg}
+                alt="Profile image"
+                className="w-[52px] h-[52px] rounded-full"
+              />
             )}
-          </TabPanel>
+          </div>
+        </div>
+  
+        <Tabs activeTab={activeTab} setActiveTab={handleTabClick}>
+          {tabLabels.map((tab) => (
+            <TabPanel
+              key={tab.label}
+              label={tab.label}
+              icon={tab.icon}
+              activeTab={activeTab}
+            >
+              {showNotifications && clickedTab === tab.label ? (
+                <Notification />
+              ) : settingPage ? (
+                <Setting />
+              ) : tab.label === 'Home' && topDone ? (
+                <TopUp />
+              ) : beneficiaryPage ? (
+                <Beneficiaries/>
+              ): (
+                tab.component
+              )}
+            </TabPanel>
+          ))}
+        </Tabs>
+      </div>
+      
+      {/* Bottom Tabs */}
+      <div className="flex justify-between bg-gray-200 p-4">
+        {tabLabels.map((tab) => (
+          <div
+            key={tab.label}
+            className={`flex flex-col items-center w-full cursor-pointer ${activeTab === tab.label ? 'text-custom-dark-green' : 'text-gray-500'}`}
+            onClick={() => handleTabClick(tab.label)}
+          >
+            {tab.icon}
+            <span className="text-xs">{tab.label}</span>
+          </div>
         ))}
-      </Tabs>
+      </div>
     </div>
   );
 };

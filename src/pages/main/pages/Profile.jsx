@@ -23,7 +23,7 @@ const Profile = () => {
     <div className="mx-8 ">
       
       <div
-  className="flex justify-center items-center w-[190px] h-[190px] rounded-full ml-16"
+  className="flex justify-center items-center w-[160px] h-[160px] rounded-full ml-16"
   style={{
     borderWidth: '8px',
     borderStyle: 'solid',
@@ -33,7 +33,7 @@ const Profile = () => {
     borderLeftColor: '#869794',
   }}
 >
-  <img src={ProfileImg} alt="Profile image" className="w-[162px] h-[162px] rounded-full" />
+  <img src={ProfileImg} alt="Profile image" className="w-[142px] h-[142px] rounded-full" />
 </div>
       <div className="bg-white w-[Fixed (296px)] h-[160px] mt-6 rounded-lg font-montserrat">
         <div className="flex justify-between  pt-2 px-2 mx-2">
