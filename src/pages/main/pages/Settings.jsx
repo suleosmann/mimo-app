@@ -2,7 +2,7 @@
 
 const Settings = () => {
   return (
-    <div className="h-screen p-4 mx-4">
+    <div className=" p-2 mx-4">
       <div className="text-lg font-semibold mb-4">Account</div>
       <div className="bg-white flex items-center justify-between  px-3 py-2 border-b-2">
         <div>j.smith@gmail.com</div>
