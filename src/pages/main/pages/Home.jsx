@@ -171,7 +171,7 @@ const Home = () => {
         )}
       </div>
       <div ref={containerRef} className="z-30 ">
-        <div className="relative h-[420px] w-[390px]">
+        <div className="relative h-[420px]">
           <div className="flex ml-6 absolute top-[50px] gap-[12px] ">
             {previousImage && (
               <div
