@@ -17,7 +17,7 @@ const Statements = () => {
 
   return (
     <div className='mx-8'>
-      <div className='h-[580px] w-[294px]'>
+      <div className=' '>
         {statements.map((statement, index) => (
           <div className='mt-6' key={index}>
             {(index === 0 || statement.date !== statements[index - 1]?.date) && (

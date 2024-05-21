@@ -65,6 +65,8 @@ const useAuthenticate = () => {
         console.log('Pin set successfully');
         setAuthType('login');
         setVerified(false);
+        // Optional: Navigate to login screen
+        // navigate('/login');
       } else {
         setError('User not found');
         console.log('Failed to set pin: User not found');
@@ -75,24 +77,29 @@ const useAuthenticate = () => {
     }
   };
 
-  const login = async (nationalId, pinCode) => {
-    try {
-      const user = db.users.find(user => user.nationalId === nationalId && user.pin === pinCode);
+  const login = async (nationalId, pin) => {
+  try {
+    const user = db.users.find(user => user.nationalId === nationalId);
+    const hardcodedPin = '1111'; // Hardcoded PIN
 
-      if (user) {
-        setUser(user); // Capture user info in user store
-        setAuthDone(true);
-        console.log('Authentication successful');
-        navigate('/main'); // Redirect to /main on successful login
-      } else {
-        setError('Invalid credentials');
-        console.log('Failed to authenticate: Invalid credentials');
-      }
-    } catch (error) {
-      setError(error.message);
-      console.log('Failed to authenticate:', error.message);
+    setAuthType('login');
+    console.log(pin);
+
+    if (user && pin === hardcodedPin) {
+      setUser(user); // Capture user info in user store
+      setAuthDone(true);
+      console.log('Authentication successful');
+      navigate('/main'); // Redirect to /main on successful login
+    } else {
+      setError('Invalid credentials');
+      console.log('Failed to authenticate: Invalid credentials');
     }
-  };
+  } catch (error) {
+    setError(error.message);
+    console.log('Failed to authenticate:', error.message);
+  }
+};
+
 
   const authenticate = async () => {
     try {
