@@ -146,7 +146,7 @@ const Home = () => {
   return (
     <div className="relative font-montserrat">
       <div className="text-center text-xl font-normal">
-        <div className="flex justify-center items-center mb-4">
+        <div className="flex justify-center items-center mb-4 ">
           <img src={MiMoAccountBalance} alt="Account Balance" />
         </div>
         <div className="flex justify-center items-center text-custom-green font-bold space-x-4">
@@ -170,7 +170,7 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div ref={containerRef} className="z-30">
+      <div ref={containerRef} className="z-30 ">
         <div className="relative h-[420px] w-[390px]">
           <div className="flex ml-6 absolute top-[50px] gap-[12px] ">
             {previousImage && (
@@ -219,11 +219,11 @@ const Home = () => {
         </div>
       </div>
       {isImageClicked && (
-        <div className="absolute bg-custom-dark-green w-full h-[369px] top-[195px] z-10 text-center">
+        <div className="absolute bg-custom-dark-green w-[360px]  h-[389px] top-[195px] z-10 text-center ">
           <h1 className="mt-20 mb-6 text-xs text-white font-bold">
             Tap on card to close
           </h1>
-          <div className="flex justify-center space-x-4 mx-3">
+          <div className="flex justify-center space-x-4 mx-3 ">
             {!addBill && (<div>
             {billerContainer  ? (
               <div
@@ -238,7 +238,7 @@ const Home = () => {
                     <input
                       type="text"
                       placeholder="Enter Amount"
-                      className="border rounded-lg p-2 w-full mr-2 bg-custom-dark-green"
+                      className="border rounded-lg p-2 mr-2 bg-custom-dark-green"
                     />
                     <button className="bg-custom-green text-custom-dark-green font-bold rounded-lg p-2 px-4">
                       PAY

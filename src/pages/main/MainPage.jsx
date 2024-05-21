@@ -1,19 +1,10 @@
 import React, { useState } from "react";
-import TabPanel from "./TabPanel";
-import Tabs from "./Tabs";
-import Home from "./pages/Home";
-import Statements from "./pages/Statements";
-import Pay from "./pages/wallet/Pay";
-import Profile from "./pages/Profile";
+import { Outlet, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaHome, FaFileAlt, FaUser, FaBell, FaCog, FaQrcode } from "react-icons/fa";
 import ProfileImg from "../../assets/ladydoll.jpeg";
-import Notification from "./pages/Notification";
 import { useUserStore } from "../../stores/useUserStore"; 
-import TopUp from ".././main/pages/wallet/TopUp";
 import { useWalletStore } from '../../stores/useWalletStore';
 import { useNavigateStore } from '../../stores/useNavigateStore';
-import Setting from './pages/Settings';
-import Beneficiaries from "./pages/Beneficiaries";
 
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -24,13 +15,17 @@ const MainPage = () => {
   const { topDone, setTopDone } = useWalletStore();
   const { settingPage, setSettingPage, beneficiaryPage, setBeneficiaryPage } = useNavigateStore();
   
+  const navigate = useNavigate();
+
   const handleSettingClick = () => {
     setSettingPage(true);
+    navigate('/main/settings');
   };
 
   const handleBellClick = () => {
     setShowNotifications(true);
     setClickedTab(activeTab);
+    navigate('/main/notifications');
   };
 
   const handleTabClick = (tabLabel) => {
@@ -39,24 +34,32 @@ const MainPage = () => {
     setClickedTab(tabLabel);
     setTopDone(false);
     setSettingPage(false); 
-    setBeneficiaryPage(false)
+    setBeneficiaryPage(false);
+  
+    if (tabLabel === "Home") {
+      navigate('/main');
+    } else {
+      navigate(`/main/${tabLabel.toLowerCase()}`);
+    }
   };
+  
 
   const handleBackClick = () => {
     setSettingPage(false);
     setActiveTab("Profile");
+    navigate('/main/profile');
   };
 
   const tabLabels = [
-    { label: "Home", icon: <FaHome />, component: <Home /> },
-    { label: "Statements", icon: <FaFileAlt />, component: <Statements /> },
-    { label: "Scan", icon: <FaQrcode />, component: <Pay /> },
-    { label: "Profile", icon: <FaUser />, component: <Profile /> },
+    { label: "Home", icon: <FaHome /> },
+    { label: "Statements", icon: <FaFileAlt /> },
+    { label: "Scan", icon: <FaQrcode /> },
+    { label: "Profile", icon: <FaUser /> },
   ];
 
   return (
-    <div className="flex flex-col">
-      <div className="flex-grow">
+    <div className="flex flex-col h-screen">
+      <div className="flex-grow overflow-y-auto">
         <div className="flex justify-between mt-6 mx-8 text-custom-dark-green">
           {showNotifications ? (
             <div className="mt-4">
@@ -98,31 +101,22 @@ const MainPage = () => {
           </div>
         </div>
   
-        <Tabs activeTab={activeTab} setActiveTab={handleTabClick}>
-          {tabLabels.map((tab) => (
-            <TabPanel
-              key={tab.label}
-              label={tab.label}
-              icon={tab.icon}
-              activeTab={activeTab}
-            >
-              {showNotifications && clickedTab === tab.label ? (
-                <Notification />
-              ) : settingPage ? (
-                <Setting />
-              ) : tab.label === 'Home' && topDone ? (
-                <TopUp />
-              ) : beneficiaryPage ? (
-                <Beneficiaries/>
-              ): (
-                tab.component
-              )}
-            </TabPanel>
-          ))}
-        </Tabs>
+        <Outlet />
       </div>
-      
-      
+      <div className="fixed bottom-0 w-full bg-custom-dark-green border-t border-gray-200">
+        <div className="flex justify-around p-4">
+          {tabLabels.map((tab) => (
+            <button
+              key={tab.label}
+              className={`flex flex-col items-center space-y-1 ${activeTab === tab.label ? 'text-white' : 'text-custom-green'}`}
+              onClick={() => handleTabClick(tab.label)}
+            >
+              {tab.icon}
+              <span className="text-xs">{tab.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

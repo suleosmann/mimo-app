@@ -12,6 +12,7 @@ const Profile = () => {
 
   const handleBeneficiaryClick = () => {
     setBeneficiaryPage(true)
+    navigate("/main/beneficiaries")
   }
 
   const handleLogout = () => {
