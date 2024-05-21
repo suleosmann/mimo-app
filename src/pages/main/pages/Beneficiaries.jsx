@@ -29,7 +29,6 @@ const Beneficiaries = () => {
     { name: "Elizabeth Ojiambo", phone: "0712456789" },
     { name: "Fulgence Ondoro", phone: "0700123456" },
     { name: "Regina Kirima", phone: "0712456789" },
-    { name: "Patrick Mahomes", phone: "0700123456" },
   ];
 
   const handleClick = (index) => {
@@ -68,7 +67,7 @@ const Beneficiaries = () => {
 
   return (
     <div className="mx-8">
-      <div className="flex flex-col w-[320px] h-[416px] space-y-3 mt-12">
+      <div className="flex flex-col w-[320px] h-[416px] space-y-3 ">
         {data.map((item, index) => (
           <div key={index} className="flex flex-col bg-white p-2 rounded-lg">
             <div onClick={() => handleClick(index)}>
@@ -99,7 +98,7 @@ const Beneficiaries = () => {
       </div>
       <div>
         <button
-          className="bg-custom-green text-custom-dark-green font-bold w-[320px] h-[44px] rounded-lg absolute bottom-28"
+          className="bg-custom-green text-custom-dark-green font-bold w-[320px] h-[44px] rounded-lg mt-4"
           onClick={handleAddBeneficiary}
         >
           ADD BENEFICIARY
