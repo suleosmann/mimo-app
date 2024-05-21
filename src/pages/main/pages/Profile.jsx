@@ -21,7 +21,7 @@ const Profile = () => {
 
 
   return (
-    <div className="mx-8 ">
+    <div className="mx-8 h-screen">
       
       <div
   className="flex justify-center items-center w-[160px] h-[160px] rounded-full ml-16"
@@ -95,11 +95,10 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div>
-        <button className="bg-custom-green text-custom-dark-green font-bold w-[325px] h-[44px] rounded-lg absolute bottom-20" onClick={handleLogout}>
+      
+      <button className="bg-custom-green text-custom-dark-green font-bold w-[325px] h-[44px] rounded-lg mt-2" onClick={handleLogout}>
           LOG OUT
         </button>
-      </div>
     </div>
   );
 };
