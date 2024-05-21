@@ -58,8 +58,8 @@ const Profile = () => {
           <h1>j.smith@mail.com</h1>
         </div>
       </div>
-      <div className="flex w-[326px] h-[60px]  mt-2">
-        <div className=" w-full h-[60px] bg-white">
+      <div className="flex w-[296px] h-[60px]  mt-2">
+        <div className=" w-full  h-[60px] bg-white">
           <div className=" flex justify-between  h-[40px]   mt-2 ml-2">
             <div className="space-y-1">
               <h1 className="text-sm font-bold">Beneficiaries</h1>
@@ -68,7 +68,7 @@ const Profile = () => {
               </h1>
             </div>
             <div>
-              <button className="text-white text-sm mr-2 my-2 rounded-lg bg-custom-dark-green p-2" onClick={handleBeneficiaryClick}>
+              <button className="text-white text-sm my-2 rounded-lg bg-custom-dark-green p-2" onClick={handleBeneficiaryClick}>
                 View
               </button>
             </div>
